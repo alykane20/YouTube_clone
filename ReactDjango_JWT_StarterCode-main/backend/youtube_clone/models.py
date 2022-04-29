@@ -1,4 +1,5 @@
 from django.db import models
+from authentication.models import User
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -8,5 +9,5 @@ class Comment(models.Model):
     dislikes = models.IntegerField(default=0)
 class Reply(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    comment = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     text = models.CharField(max_length=255)
