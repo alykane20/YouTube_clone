@@ -4,6 +4,6 @@ from youtube_clone import views
 # <<<<<<<<<<<<<<<<< EXAMPLE FOR STARTER CODE USE <<<<<<<<<<<<<<<<<
 
 urlpatterns = [
-    path('', views.user_comments),
+    path('<int:pk>/', views.user_comments),
     path('', views.get_comments),
 ]
