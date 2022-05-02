@@ -1,5 +1,5 @@
 from xml.etree.ElementTree import Comment
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .serializer import CommentSerializer
 from .serializer import ReplySerializer
 from rest_framework import status
@@ -21,7 +21,7 @@ def get_comments(request):
 
 @api_view(['POST', 'GET'])
 @permission_classes([IsAuthenticated])
-def user_comments(request, pk):
+def user_comments(request, video_id):
     print(
         'User ', f"{request.user.id} {request.user.email} {request.user.username}")
     if request.method == 'POST':
@@ -31,7 +31,25 @@ def user_comments(request, pk):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'GET':
-        comment = Comment.objects.filter(video_id=pk)
+        comment = Comment.objects.filter(video_id=video_id)
         serializer = CommentSerializer(comment, many=True)
         return Response(serializer.data)
 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])    
+def update_comment(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.method == 'PUT':
+        serializer = CommentSerializer(comment, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+
+
+        # if request.method == 'PUT':
+        # serializer = CommentSerializer(data=request.data)
+        # if serializer.is_valid():
+        #     serializer.save(user=request.user)
+        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
