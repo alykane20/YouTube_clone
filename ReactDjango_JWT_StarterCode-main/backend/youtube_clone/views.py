@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
-from .models import Comment
+from .models import Comment, Reply
 
 # Create your views here.
 
@@ -35,7 +35,7 @@ def user_comments(request, video_id):
         serializer = CommentSerializer(comment, many=True)
         return Response(serializer.data)
 
-@api_view(['PUT'])
+@api_view(['PUT', 'GET'])
 @permission_classes([IsAuthenticated])    
 def update_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
@@ -44,12 +44,11 @@ def update_comment(request, pk):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+    elif request.method == 'GET':
+        reply = Reply.objects.filter(comment_id=pk)
+        serializer = ReplySerializer(reply, many=True)
+        return Response(serializer.data)
 
 
 
-        # if request.method == 'PUT':
-        # serializer = CommentSerializer(data=request.data)
-        # if serializer.is_valid():
-        #     serializer.save(user=request.user)
-        #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
