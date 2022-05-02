@@ -35,7 +35,7 @@ def user_comments(request, video_id):
         serializer = CommentSerializer(comment, many=True)
         return Response(serializer.data)
 
-@api_view(['PUT', 'GET'])
+@api_view(['PUT', 'GET', 'POST'])
 @permission_classes([IsAuthenticated])    
 def update_comment(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
@@ -48,6 +48,13 @@ def update_comment(request, pk):
         reply = Reply.objects.filter(comment_id=pk)
         serializer = ReplySerializer(reply, many=True)
         return Response(serializer.data)
+    elif request.method == 'POST':
+        reply = get_object_or_404(Reply, comment_id=pk)
+        serializer = ReplySerializer(reply, data=request.data)
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 
 
