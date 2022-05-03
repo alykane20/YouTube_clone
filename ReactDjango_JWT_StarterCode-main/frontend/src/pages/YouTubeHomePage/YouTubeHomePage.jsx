@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 
 import axios from "axios";
+import SearchPage from "../../components/SearchPage/SearchPage";
 
 const YouTubeHomePage = () => {
     const [user, token] = useAuth();
@@ -26,6 +27,7 @@ const YouTubeHomePage = () => {
       return (
         <div >
           <h1>Home Page for {user.username}!</h1>
+          
         </div>
       );
     };
