@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"alykane\",\r\n    \"password\": \"password1@\",\r\n    \"email\": \"aly@devcodecamp.com\",\r\n    \"first_name\": \"Aly\",\r\n    \"last_name\": \"Kane\"\r\n}",
+							"raw": "{\r\n    \"username\": \"devinjohnson\",\r\n    \"password\": \"password1@\",\r\n    \"email\": \"devin@devcodecamp.com\",\r\n    \"first_name\": \"Devin\",\r\n    \"last_name\": \"Johnson\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -413,6 +413,94 @@
 								"update",
 								"4",
 								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search for videos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://www.googleapis.com/youtube/v3/search?q=soccer&key=AIzaSyABXiDhKWUWUuqkgrLUQ4fEq6bTI5A1C9M&part=snippet&type=video&maxResults=4",
+							"protocol": "https",
+							"host": [
+								"www",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"youtube",
+								"v3",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "soccer"
+								},
+								{
+									"key": "key",
+									"value": "AIzaSyABXiDhKWUWUuqkgrLUQ4fEq6bTI5A1C9M"
+								},
+								{
+									"key": "part",
+									"value": "snippet"
+								},
+								{
+									"key": "type",
+									"value": "video"
+								},
+								{
+									"key": "maxResults",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Serach for related videos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://www.googleapis.com/youtube/v3/search?relatedToVideoId=yHh1jLQFDzs&type=video&key=AIzaSyABXiDhKWUWUuqkgrLUQ4fEq6bTI5A1C9M&maxResults=4&part=snippet",
+							"protocol": "https",
+							"host": [
+								"www",
+								"googleapis",
+								"com"
+							],
+							"path": [
+								"youtube",
+								"v3",
+								"search"
+							],
+							"query": [
+								{
+									"key": "relatedToVideoId",
+									"value": "yHh1jLQFDzs"
+								},
+								{
+									"key": "type",
+									"value": "video"
+								},
+								{
+									"key": "key",
+									"value": "AIzaSyABXiDhKWUWUuqkgrLUQ4fEq6bTI5A1C9M"
+								},
+								{
+									"key": "maxResults",
+									"value": "4"
+								},
+								{
+									"key": "part",
+									"value": "snippet"
+								}
 							]
 						}
 					},
