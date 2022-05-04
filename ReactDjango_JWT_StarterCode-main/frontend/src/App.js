@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import YouTubeHomePage from "./pages/YouTubeHomePage/YouTubeHomePage";
+import SearchBar from "./components/SearchBar/SearchBar";
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -21,18 +22,7 @@ import {KEY} from './localKey';
 
 
 function App() {
-const [searchResults, setSearchResults] = useState([]);
-useEffect(() => {
-  getSearchResults()
-}, [])
-
-async function getSearchResults(searchTerm="Soccer"){
-  try{
-      let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchTerm}&key=${KEY}&part=snippet&type=video&maxResults=4`);
-      console.log(response.data.items)
-      setSearchResults(response.data.items)}
-  catch(ex) {
-        console.log ('Error');}}
+const [video, setVideo]= useState([]);
 
 
   return (
@@ -43,8 +33,9 @@ async function getSearchResults(searchTerm="Soccer"){
           path="/"
           element={
             <div>
-            <YouTubeHomePage />
+            
             <PrivateRoute>
+            <YouTubeHomePage video={video}/>
               {/* Ability to add comments/replies on a video after login */}
             </PrivateRoute>
           </div>}

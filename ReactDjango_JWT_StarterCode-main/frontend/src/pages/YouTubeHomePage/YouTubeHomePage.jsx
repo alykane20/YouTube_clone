@@ -3,31 +3,31 @@ import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 
 import axios from "axios";
-import SearchPage from "../../components/SearchPage/SearchPage";
+import SearchBar from "../../components/SearchBar/SearchBar";
 
 const YouTubeHomePage = (props) => {
     const [user, token] = useAuth();
     const [videos, setVideos] = useState([]);
     
     useEffect(() => {
-        const fetchVideos = async () => {
+        const fetchVideos = async (searchTerm="Soccer") => {
           try {
-            let response = await axios.get("http://127.0.0.1:8000/api/videos/", {
-              headers: {
-                Authorization: "Bearer " + token,
-              },
-            });
-            setVideos(response.data);
-          } catch (error) {
+            let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchTerm}&key=${KEY}&part=snippet&type=video&maxResults=4`)        
+            setVideos(response.data);}            
+           
+          catch (error) {
             console.log(error.message);
-          }
-        };
+          }}
+        
         fetchVideos();
-      }, [token]);
+        });
+    
+    
       return (
         <div >
+          {/* <SearchBar/>   */}
           <h1>Home Page for {user.username}!</h1>
-          <SearchPage/>
+          
         </div>
       );
     };
