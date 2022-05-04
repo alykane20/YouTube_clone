@@ -5,10 +5,10 @@ import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import SearchPage from "../../components/SearchPage/SearchPage";
 
-const YouTubeHomePage = () => {
+const YouTubeHomePage = (props) => {
     const [user, token] = useAuth();
     const [videos, setVideos] = useState([]);
-
+    
     useEffect(() => {
         const fetchVideos = async () => {
           try {
@@ -27,7 +27,7 @@ const YouTubeHomePage = () => {
       return (
         <div >
           <h1>Home Page for {user.username}!</h1>
-          
+          <SearchPage/>
         </div>
       );
     };

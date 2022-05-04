@@ -4,38 +4,27 @@ import axios from "axios";
 import { useEffect, useState } from "react/cjs/react.production.min";
 
 
-const SearchPage = () => {
-const[video, setVideo] = useState([{ }])
-const[search, setSearch] = useState('soccer')
- 
-useEffect(() => {
-     videoSearch();
- },[])
-    async function videoSearch(){
-    try{
-        let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${search}&key=AIzaSyABXiDhKWUWUuqkgrLUQ4fEq6bTI5A1C9M&part=snippet&type=video&maxResults=4`);
-        console.log(response.data)
-        setVideo(response.data)
-} catch(ex) {
-    console.log ('Error');
-  }
-}
-function handleSubmit(event) {
-    event.preventDefault();
-    videoSearch();
-    
-    }
-    return (
-        <form onSubmit={handleSubmit} >
-            <div>
-                <input type="text" 
-                value={search} 
-                onChange={(event) =>setSearch(event.target.value)} />
-                <button  type="submit" >Search</button>
-            </div>
-        </form>
-    )
+const SearchPage = (props) => {
 
+    console.log(props)
+
+    const handleClick = (event, id, title, description) => {
+        event.preventDefault();
+    }
+
+    return (
+        <div>
+            <div>
+                {props.videos.map(video => (
+                <input type="image"
+                onClick={(event)=> handleClick(event, video.id.videoId, video.snippet.title, video.snippet.description)}
+                src={video.snippet.thumbnails.medium.url}
+                />
+                ))}
+            </div>
+
+        </div>
+    )
 }
 
  
