@@ -36,7 +36,7 @@ const [description, setDescription] = useState([]);
   async function getSearchResults(searchTerm="Soccer"){
   
         let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchTerm}&key=${KEY}&part=snippet&type=video&maxResults=4`);
-        console.log(response.data.items)
+        // console.log(response.data.items)
         setSearchResults(response.data.items)
         setVideoId(response.data.items[0].id.videoId)
         setTitle(response.data.items[0].snippet.title)

@@ -10,7 +10,4 @@ const VideoPage = (props) => {
 
 
 
-
-
-
   export default VideoPage;
