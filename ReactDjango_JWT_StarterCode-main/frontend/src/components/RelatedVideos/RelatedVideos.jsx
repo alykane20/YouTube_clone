@@ -11,13 +11,22 @@ const RelatedVideos  = (props) => {
         }, [])
 
     async function getRelatedVideos(){
-    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${props.videoId}&type=video&key=${KEY}`);
-    console.log(response.data)
-    setRelatedVideos(response.data)
+    let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${props.videoId}&type=video&key=${KEY}&part=snippet`);
+    console.log(response.data.items);
+    setRelatedVideos(response.data.items);
     }
+    
     return (  
-        <div>Video?</div>
-        
+        <div>
+        {relatedVideos.map((video) => {
+            const videoSnippet = video.snippet.thumbnails.medium.url
+            return(
+                
+                <img src={videoSnippet}/>
+                
+            )
+        })}
+        </div>  
     );
 }
 

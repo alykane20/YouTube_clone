@@ -10,7 +10,7 @@ const SearchBar = (props) => {
 
     return (  
         <form>
-            <input type="text" placeholder="Search" value={searchField} onClick={(event) =>{setSearchField(event.target.value)}}/>
+            <input type="text" placeholder="Search" value={searchField} onChange={(event) =>{setSearchField(event.target.value)}}/>
             <Link to={`/search/${searchField}`}>
             <button>Search</button>
             </Link>
