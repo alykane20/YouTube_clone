@@ -11,7 +11,7 @@ const SearchPage = (props) => {
 
     return (
         <div>
-            <SearchBar/>
+            <SearchBar getSearchResults={props.getSearchResults} setSearchTerm={props.setSearchTerm} searchTerm={props.searchTerm}/>
             <div>
         
                 <div>
@@ -19,9 +19,7 @@ const SearchPage = (props) => {
                     <div>{props.title} </div>
                     <div>{props.description}</div>
                 </div>
-                <div>
-                    <RelatedVideos videoId={props.videoId}/>
-                </div>
+                
             </div>
 
         </div>

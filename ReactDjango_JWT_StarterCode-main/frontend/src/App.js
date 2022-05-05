@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import YouTubeHomePage from "./pages/YouTubeHomePage/YouTubeHomePage";
 import SearchPage from "./components/SearchPage/SearchPage";
+import RelatedVideos from "./components/RelatedVideos/RelatedVideos";
 import {KEY} from './localKey';
 
 
@@ -29,11 +30,12 @@ const [videoId, setVideoId] = useState([]);
 const [title, setTitle] = useState([]);
 const [description, setDescription] = useState([]);
 
+
     useEffect(() => {
       getSearchResults()
       }, [])
   
-  async function getSearchResults(searchTerm="Soccer"){
+  async function getSearchResults(searchTerm = 'soccer'){
   
         let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchTerm}&key=${KEY}&part=snippet&type=video&maxResults=4`);
         // console.log(response.data.items)
@@ -47,8 +49,10 @@ const [description, setDescription] = useState([]);
   return (
     <div>
       <Navbar />
-      <SearchPage videoId={videoId} title={title} description={description}/>
-      <Routes>
+      {/* <SearchPage getSearchResults={getSearchResults} searchTerm={searchTerm} setSearchTerm={setSearchTerm} videoId={videoId} title={title} description={description}/> */}
+      <SearchPage getSearchResults={getSearchResults}  videoId={videoId} title={title} description={description}/>
+      <RelatedVideos videoId={videoId} title={title} description={description} setVideoId={setVideoId} setTitle={setTitle} setDescription={setDescription}/>
+        <Routes>
         <Route path="/" element={<YouTubeHomePage/>}/>        
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />

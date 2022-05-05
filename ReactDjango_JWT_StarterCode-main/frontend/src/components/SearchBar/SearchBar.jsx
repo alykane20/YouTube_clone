@@ -1,19 +1,20 @@
 import React, {useState} from "react";
-import { Link } from "react-router-dom";
 
 
 const SearchBar = (props) => {
-    const [searchField, setSearchField] = useState("")
-    
-
-    
+    const [searchTerm, setSearchTerm] = useState('')
+    function handleSubmit(event){
+        debugger
+        event.preventDefault()
+        props.getSearchResults(searchTerm)
+    }
 
     return (  
-        <form>
-            <input type="text" placeholder="Search" value={searchField} onChange={(event) =>{setSearchField(event.target.value)}}/>
-            <Link to={`/search/${searchField}`}>
-            <button>Search</button>
-            </Link>
+        <form onSubmit={(event)=>handleSubmit(event)}>
+            <input type="text" placeholder="Search" onChange={(event) =>{setSearchTerm(event.target.value)}}/>
+            
+            <button type="submit">Search</button>
+            
         </form>
     );
 }

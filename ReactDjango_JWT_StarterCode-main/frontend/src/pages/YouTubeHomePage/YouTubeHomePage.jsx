@@ -16,8 +16,8 @@ const YouTubeHomePage = (props) => {
     
       return (
         <div >
-          {/* <SearchBar/>   */}
-          <h1>Home Page for !</h1>
+          
+          <h1>Home Page videos!</h1>
           
         </div>
       );
