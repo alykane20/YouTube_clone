@@ -8,7 +8,9 @@ import HomePage from "./pages/HomePage/HomePage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import YouTubeHomePage from "./pages/YouTubeHomePage/YouTubeHomePage";
-import SearchBar from "./components/SearchBar/SearchBar";
+import SearchPage from "./components/SearchPage/SearchPage";
+import {KEY} from './localKey';
+
 
 // Component Imports
 import Navbar from "./components/NavBar/NavBar";
@@ -16,32 +18,47 @@ import Footer from "./components/Footer/Footer";
 
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
-import { useEffect, useState } from "react/cjs/react.production.min";
+import { useEffect, useState } from "react";
 
-import {KEY} from './localKey';
+
 
 
 function App() {
-const [video, setVideo]= useState([]);
+const [searchResults, setSearchResults]= useState([]);
+const [videoId, setVideoId] = useState([]);
+const [title, setTitle] = useState([]);
+const [description, setDescription] = useState([]);
 
+    useEffect(() => {
+      getSearchResults()
+      }, [])
+  
+  async function getSearchResults(searchTerm="Soccer"){
+  
+        let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchTerm}&key=${KEY}&part=snippet&type=video&maxResults=4`);
+        console.log(response.data.items)
+        setSearchResults(response.data.items)
+        setVideoId(response.data.items[0].id.videoId)
+        setTitle(response.data.items[0].snippet.title)
+        setDescription(response.data.items[0].snippet.description)
+      }
+    
 
   return (
     <div>
       <Navbar />
+      <SearchPage videoId={videoId} title={title} description={description}/>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-            
-            <PrivateRoute>
-            <YouTubeHomePage video={video}/>
-              {/* Ability to add comments/replies on a video after login */}
-            </PrivateRoute>
-          </div>}
-        />
+        <Route path="/" element={<YouTubeHomePage/>}/>        
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        {/* <Route path="/comments"
+          element={
+            <PrivateRoute>
+            <Comment/>
+            </PrivateRoute>
+          }
+        /> */}
       </Routes>
       <Footer />
     </div>
