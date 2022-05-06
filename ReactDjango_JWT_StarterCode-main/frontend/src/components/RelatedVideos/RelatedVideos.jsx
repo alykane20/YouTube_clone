@@ -11,10 +11,8 @@ const RelatedVideos  = (props) => {
         }, [props.videoId])
 
     async function getRelatedVideos(){
-        debugger
     let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?relatedToVideoId=${props.videoId}&key=${KEY}&part=snippet&type=video`);
     console.log(response.data.items);
-    debugger
     setRelatedVideos(response.data.items);
     }
     const handleClick = (event, id, title, description) => {

@@ -2,6 +2,7 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 // Pages Imports
 import HomePage from "./pages/HomePage/HomePage";
@@ -10,6 +11,8 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import YouTubeHomePage from "./pages/YouTubeHomePage/YouTubeHomePage";
 import SearchPage from "./components/SearchPage/SearchPage";
 import RelatedVideos from "./components/RelatedVideos/RelatedVideos";
+import Comment from "./components/Comment/Comment";
+import CommentList from "./components/CommentList/CommentList";
 import {KEY} from './localKey';
 
 
@@ -49,20 +52,21 @@ const [description, setDescription] = useState([]);
   return (
     <div>
       <Navbar />
-      {/* <SearchPage getSearchResults={getSearchResults} searchTerm={searchTerm} setSearchTerm={setSearchTerm} videoId={videoId} title={title} description={description}/> */}
       <SearchPage getSearchResults={getSearchResults}  videoId={videoId} title={title} description={description}/>
+      <Link to="/login">To comment, please login!</Link>
+      <CommentList videoId={videoId}/>
       <RelatedVideos videoId={videoId} title={title} description={description} setVideoId={setVideoId} setTitle={setTitle} setDescription={setDescription}/>
         <Routes>
         <Route path="/" element={<YouTubeHomePage/>}/>        
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        {/* <Route path="/comments"
+        <Route path="/comments"
           element={
             <PrivateRoute>
-            <Comment/>
+            <Comment videoId={videoId}/>
             </PrivateRoute>
           }
-        /> */}
+        />
       </Routes>
       <Footer />
     </div>
