@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
 import CommentForm from "../CommentForm/CommentForm";
+import CommentList from "../CommentList/CommentList";
 import useAuth from "../../hooks/useAuth";
 
 
@@ -12,7 +13,8 @@ const CreateComment = (props) => {
     useEffect(() => {
         const fetchComments = async () => {
           try {
-            let response = await axios.get("http://127.0.0.1:8000/api/video/{props.video.Id}/", {
+            debugger
+            let response = await axios.get(`http://127.0.0.1:8000/api/video/${props.currentVideo.id.videoId}/`, {
               headers: {
                 Authorization: "Bearer " + token,
               },
@@ -22,9 +24,8 @@ const CreateComment = (props) => {
             console.log(error.message);
           }
         };
-        console.log(comment)
         fetchComments();
-      }, [token]);
+      }, [props.currentVideo]);
 
 
     async function newComment(){
@@ -33,16 +34,17 @@ const CreateComment = (props) => {
             likes: 0,
             dislikes: 0,
             };
-        let response = await axios.post('http://127.0.0.1:8000/api/video/{props.video.Id}', newComment)
+        let response = await axios.post(`http://127.0.0.1:8000/api/video/${props.currentVideo}`, newComment)
         if(response.status === 201){
             await props.getSearchResults();
-        }}
+        }console.log(props.currentVideo.id.videoId)}
 
 
     return (  
-        
+        <div>
+        <CommentList currentVideo={props.currentVideo}/>
         <CommentForm text={text} setText={setText} newComment={newComment}/>
-      
+        </div>
     );
 }
  

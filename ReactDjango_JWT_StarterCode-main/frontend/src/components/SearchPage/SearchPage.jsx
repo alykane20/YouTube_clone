@@ -15,9 +15,9 @@ const SearchPage = (props) => {
             <div>
         
                 <div>
-                    <VideoPage videoId={props.videoId}/>
-                    <div>{props.title} </div>
-                    <div>{props.description}</div>
+                    <VideoPage videoId={props.currentVideo.id.videoId}/>
+                    <div>{props.currentVideo.snippet.title} </div>
+                    <div>{props.currentVideo.snippet.description}</div>
                 </div>
                 
             </div>

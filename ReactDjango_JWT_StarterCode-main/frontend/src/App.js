@@ -11,7 +11,7 @@ import RegisterPage from "./pages/RegisterPage/RegisterPage";
 import YouTubeHomePage from "./pages/YouTubeHomePage/YouTubeHomePage";
 import SearchPage from "./components/SearchPage/SearchPage";
 import RelatedVideos from "./components/RelatedVideos/RelatedVideos";
-import Comment from "./components/Comment/Comment";
+import CreateComment from "./components/Comment/Comment";
 import CommentList from "./components/CommentList/CommentList";
 import {KEY} from './localKey';
 
@@ -29,9 +29,8 @@ import { useEffect, useState } from "react";
 
 function App() {
 const [searchResults, setSearchResults]= useState([]);
-const [videoId, setVideoId] = useState([]);
-const [title, setTitle] = useState([]);
-const [description, setDescription] = useState([]);
+const [currentVideo, setCurrentVideo] = useState({});
+
 
 
     useEffect(() => {
@@ -41,32 +40,32 @@ const [description, setDescription] = useState([]);
   async function getSearchResults(searchTerm = 'soccer'){
   
         let response = await axios.get(`https://www.googleapis.com/youtube/v3/search?q=${searchTerm}&key=${KEY}&part=snippet&type=video&maxResults=4`);
-        // console.log(response.data.items)
+        console.log(response.data.items)
         setSearchResults(response.data.items)
-        setVideoId(response.data.items[0].id.videoId)
-        setTitle(response.data.items[0].snippet.title)
-        setDescription(response.data.items[0].snippet.description)
+        setCurrentVideo(response.data.items[0])
       }
     
 
   return (
     <div>
       <Navbar />
-      <SearchPage getSearchResults={getSearchResults}  videoId={videoId} title={title} description={description}/>
+      <SearchPage getSearchResults={getSearchResults} currentVideo={currentVideo}/> 
+      <CreateComment currentVideo={currentVideo}/>
+    
       <Link to="/login">To comment, please login!</Link>
-      <CommentList videoId={videoId}/>
-      <RelatedVideos videoId={videoId} title={title} description={description} setVideoId={setVideoId} setTitle={setTitle} setDescription={setDescription}/>
+      
+      <RelatedVideos currentVideo={currentVideo} setCurrentVideo={setCurrentVideo}/>
         <Routes>
         <Route path="/" element={<YouTubeHomePage/>}/>        
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/comments"
+        {/* <Route path="/comments"
           element={
             <PrivateRoute>
             <Comment videoId={videoId}/>
             </PrivateRoute>
           }
-        />
+        /> */}
       </Routes>
       <Footer />
     </div>
